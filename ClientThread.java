@@ -69,7 +69,7 @@ public class ClientThread extends Thread {
                         continue;
                     }
                     outs[i] = new PrintWriter(tmp.getOutputStream(), true);
-                    outs[i].println(u.getName(socket) + ": " +outputLine);
+                    outs[i].println(outputLine);
                     //out.println(tmp);
                     //System.out.println(tmp);
                 }
