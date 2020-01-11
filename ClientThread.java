@@ -32,8 +32,21 @@ public class ClientThread extends Thread {
         String inputLine, outputLine;
         KnockKnockProtocol kkp = new KnockKnockProtocol();
         outputLine = Integer.toString(u.getUsers().size()-1);
-
+        PrintWriter ready;
         out.println(outputLine);
+        /*if(u.getUsers().size() == 2){
+            Iterator itt = u.getUsers().entrySet().iterator();
+            Map.Entry mapElement = (Map.Entry)itt.next();
+            Socket tmp = (Socket) mapElement.getValue();
+            ready = new PrintWriter(tmp.getOutputStream(), true);
+            out.println("1");
+            //itt.next();
+            mapElement = (Map.Entry)itt.next();
+            tmp = (Socket)mapElement.getValue();
+            ready = new PrintWriter(tmp.getOutputStream(), true);
+            out.println("1");
+        }*/
+
         while ((inputLine = in.readLine()) != null) {
             users = u.getUsers();
             outs = new PrintWriter[users.size()];
