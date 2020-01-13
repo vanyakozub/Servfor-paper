@@ -15,6 +15,9 @@ public class tcpServer {
                 try {
 
                     Socket clientSocket = serverSocket.accept();
+                    if (users.getNumOfUsers() == 2){
+                        users.Users.clear();
+                    }
                     users.add("Client"+ users.getNumOfUsers(), clientSocket);
                     System.out.println("Client"+ (users.getNumOfUsers() - 1)+ ": connected to server");
                     ClientThread clientThread = new ClientThread(clientSocket, users);
