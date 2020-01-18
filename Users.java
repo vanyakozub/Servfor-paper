@@ -7,7 +7,6 @@ import java.util.Map;
 public class Users {
     public HashMap<String, Socket> Users = new HashMap<String, Socket>() ;
 
-    //public ArrayList<Socket> Users  = new ArrayList<Socket>();
     public void add(String name, Socket s) {
         if(Users.get(name) == null) {
 

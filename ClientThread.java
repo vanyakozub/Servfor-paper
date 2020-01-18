@@ -24,56 +24,23 @@ public class ClientThread extends Thread {
     }
 
     public void act() throws Exception {
-        //boolean personalMessage = false;
         PrintWriter[] outs;
         HashMap<String, Socket> users;
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         String inputLine, outputLine;
-        KnockKnockProtocol kkp = new KnockKnockProtocol();
         outputLine = Integer.toString(u.getUsers().size()-1);
-        PrintWriter ready;
         out.println(outputLine);
-        /*if(u.getUsers().size() == 2){
-            Iterator itt = u.getUsers().entrySet().iterator();
-            Map.Entry mapElement = (Map.Entry)itt.next();
-            Socket tmp = (Socket) mapElement.getValue();
-            ready = new PrintWriter(tmp.getOutputStream(), true);
-            out.println("1");
-            //itt.next();
-            mapElement = (Map.Entry)itt.next();
-            tmp = (Socket)mapElement.getValue();
-            ready = new PrintWriter(tmp.getOutputStream(), true);
-            out.println("1");
-        }*/
+
 
         while ((inputLine = in.readLine()) != null) {
             users = u.getUsers();
             outs = new PrintWriter[users.size()];
             Iterator it = users.entrySet().iterator();
-            outputLine = kkp.processInput(inputLine);
-            int mode = kkp.analyse(inputLine);
-            /*switch (mode){
-                case (0):
-                    personalMessage = false;
-                    break;
-                case (1):
-                    personalMessage = true;
-                    break;
-                case (2):
-                    break;// add changeName method
-            }*/
-            if(mode == 1) {
-                String sendName = kkp.argOfFunc(mode, inputLine);
-                for(int i = 0; it.hasNext()&& i < users.size(); i++) {
-                    Map.Entry mapElement = (Map.Entry)it.next();
-                    if(sendName.equals(mapElement.getKey())){
-                        Socket tmp = (Socket) mapElement.getValue();
-                        PrintWriter pers = new PrintWriter(tmp.getOutputStream(), true);
-                        pers.println(u.getName(socket) + " (PERSONAL) " + kkp.argOfFunc(3, outputLine));
-                    }
-                }
-            }
+            outputLine = inputLine;
+            int mode = 0;
+
+
             if(mode == 0) {
                 for(int i = 0; it.hasNext()&& i < users.size(); i++) {
                     Map.Entry mapElement = (Map.Entry)it.next();
@@ -83,23 +50,13 @@ public class ClientThread extends Thread {
                     }
                     outs[i] = new PrintWriter(tmp.getOutputStream(), true);
                     outs[i].println(outputLine);
-                    //out.println(tmp);
-                    //System.out.println(tmp);
+
                 }
             }
-            if(mode == 2){
-                String curName = u.getName(socket);
-                String newName = kkp.argOfFunc(mode, inputLine);
-                u.setName(socket, newName);
-                System.out.println(curName + " has changed his name to "+ newName);
-
-            }
-
-
 
             System.out.println(u.getName(socket) + ": " + outputLine);
 
-            //out.println(inputLine);
+
             if (outputLine.equals("Bye."))
                 break;
         }
